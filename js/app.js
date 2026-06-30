@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderGrids();
   initSearch();
   initTranslate();
+  initTTS();
 });
 
 /* ---------- Navigation (tabbed SPA + hash sync) ---------- */
@@ -99,11 +100,17 @@ function initTranslate() {
   const btn = document.getElementById("translate-btn");
   const result = document.getElementById("translate-result");
   const source = document.getElementById("translate-source");
+  const speakBtn = document.getElementById("speak-btn");
 
   function setResult(text, sourceLabel, dim = false) {
     result.textContent = text;
     result.classList.toggle("dim", dim);
     source.textContent = sourceLabel || "";
+    // Show speak button only when there's a real Japanese result.
+    if (speakBtn) {
+      speakBtn.hidden = dim;
+      if (!dim) speakJapanese(text);
+    }
   }
 
   async function doTranslate() {
@@ -153,6 +160,57 @@ function initTranslate() {
   });
 
   initVoiceInput(input, doTranslate);
+}
+
+/* ---------- Text-to-speech for Japanese output ---------- */
+let ttsVoices = [];
+
+function loadVoices() {
+  ttsVoices = speechSynthesis.getVoices();
+}
+
+function pickJapaneseVoice() {
+  const ja = ttsVoices.filter((v) => v.lang === "ja-JP" || v.lang.startsWith("ja"));
+  if (!ja.length) return null;
+  // Prefer a voice whose name hints at male (varies by OS/browser).
+  const male = ja.find((v) => /male|otoko|男/i.test(v.name));
+  return male || ja[0];
+}
+
+function speakJapanese(text) {
+  if (!window.speechSynthesis || !text) return;
+  speechSynthesis.cancel(); // stop any ongoing speech
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = "ja-JP";
+  utt.rate = 0.9;
+  utt.pitch = 0.8; // slightly lower pitch — closer to male delivery
+
+  const voice = pickJapaneseVoice();
+  if (voice) utt.voice = voice;
+
+  const speakBtn = document.getElementById("speak-btn");
+  if (speakBtn) {
+    utt.onstart = () => speakBtn.classList.add("speaking");
+    utt.onend = utt.onerror = () => speakBtn.classList.remove("speaking");
+  }
+
+  speechSynthesis.speak(utt);
+}
+
+function initTTS() {
+  if (!window.speechSynthesis) return;
+
+  // Voices load asynchronously; populate on the event if not immediately available.
+  loadVoices();
+  speechSynthesis.addEventListener("voiceschanged", loadVoices);
+
+  const speakBtn = document.getElementById("speak-btn");
+  if (speakBtn) {
+    speakBtn.addEventListener("click", () => {
+      const text = document.getElementById("translate-result").textContent;
+      if (text && text !== "—") speakJapanese(text);
+    });
+  }
 }
 
 /* ---------- Voice input (Web Speech API) ---------- */

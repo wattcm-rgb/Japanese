@@ -250,7 +250,21 @@ body {
   flex-direction: column;
   gap: 8px;
 }
+.result-card-header { display: flex; align-items: center; justify-content: space-between; }
 .result-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+.speak-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  font-size: 1rem;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  transition: border-color 0.16s, color 0.16s, background 0.16s;
+}
+.speak-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.speak-btn.speaking { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .result-text { font-size: 1.9rem; font-weight: 600; line-height: 1.4; word-break: break-word; }
 .result-text.dim { color: var(--text-dim); font-size: 1.1rem; font-weight: 400; }
 .result-source { font-size: 0.8rem; color: var(--text-dim); }
