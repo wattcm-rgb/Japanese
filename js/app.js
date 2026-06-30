@@ -126,12 +126,15 @@ function initTranslate() {
     try {
       const url =
         "https://api.mymemory.translated.net/get?q=" +
-        encodeURIComponent(raw) + "&langpair=en|ja";
+        encodeURIComponent(raw) + "&langpair=en%7Cja";
       const res = await fetch(url);
       if (!res.ok) throw new Error("Network response was not ok");
       const data = await res.json();
       const translated = data?.responseData?.translatedText;
-      if (translated && data.responseStatus === 200) {
+      const ok = data.responseStatus === 200 &&
+                 translated &&
+                 !translated.toLowerCase().includes("please, specify");
+      if (ok) {
         setResult(translated, "Via MyMemory API");
       } else {
         setResult("No translation found.", "", true);
