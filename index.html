@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>日本語 — Japanese Learning</title>
+  <meta name="description" content="A clean, modern dark-mode app to learn Hiragana, Katakana, Kanji, and translate English to Japanese." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Sidebar / top-bar navigation -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-jp">日本語</span>
+      <span class="brand-en">Learn Japanese</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" data-view="hiragana">あ<span>Hiragana</span></button>
+      <button class="nav-btn" data-view="katakana">ア<span>Katakana</span></button>
+      <button class="nav-btn" data-view="kanji">漢<span>Kanji</span></button>
+      <button class="nav-btn" data-view="translate">訳<span>Translate</span></button>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="content">
+    <!-- Hiragana -->
+    <section id="hiragana" class="view active">
+      <header class="view-header">
+        <div class="view-title">
+          <h1>Hiragana <span class="subtitle">ひらがな</span></h1>
+          <p class="view-desc">The basic Japanese syllabary. Each card shows the character and its romaji.</p>
+        </div>
+        <input type="search" class="search" data-target="hiragana-grid"
+               placeholder="Search character or romaji…" aria-label="Search hiragana" />
+      </header>
+      <div id="hiragana-grid" class="grid"></div>
+      <p class="no-results" hidden>No matches found.</p>
+    </section>
+
+    <!-- Katakana -->
+    <section id="katakana" class="view">
+      <header class="view-header">
+        <div class="view-title">
+          <h1>Katakana <span class="subtitle">カタカナ</span></h1>
+          <p class="view-desc">Used mainly for loanwords and emphasis. Each card shows the character and its romaji.</p>
+        </div>
+        <input type="search" class="search" data-target="katakana-grid"
+               placeholder="Search character or romaji…" aria-label="Search katakana" />
+      </header>
+      <div id="katakana-grid" class="grid"></div>
+      <p class="no-results" hidden>No matches found.</p>
+    </section>
+
+    <!-- Kanji -->
+    <section id="kanji" class="view">
+      <header class="view-header">
+        <div class="view-title">
+          <h1>Kanji <span class="subtitle">漢字</span></h1>
+          <p class="view-desc">Common everyday characters with reading and English meaning.</p>
+        </div>
+        <input type="search" class="search" data-target="kanji-grid"
+               placeholder="Search kanji, reading, or meaning…" aria-label="Search kanji" />
+      </header>
+      <div id="kanji-grid" class="grid grid-kanji"></div>
+      <p class="no-results" hidden>No matches found.</p>
+    </section>
+
+    <!-- Translate -->
+    <section id="translate" class="view">
+      <header class="view-header">
+        <div class="view-title">
+          <h1>Translate <span class="subtitle">翻訳</span></h1>
+          <p class="view-desc">Type or speak English and get the Japanese translation.</p>
+        </div>
+      </header>
+
+      <div class="translate-panel">
+        <div class="input-wrap">
+          <textarea id="translate-input" class="translate-input" rows="4"
+                    placeholder="Type English here… e.g. hello"></textarea>
+          <button id="mic-btn" class="mic-btn" title="Speak in English" aria-label="Voice input">🎤</button>
+        </div>
+        <div class="translate-actions">
+          <button id="translate-btn" class="btn-primary">Translate</button>
+          <span id="mic-status" class="mic-status"></span>
+        </div>
+
+        <div class="result-card">
+          <span class="result-label">Japanese</span>
+          <div id="translate-result" class="result-text">—</div>
+          <span id="translate-source" class="result-source"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/data.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
