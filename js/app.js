@@ -99,6 +99,7 @@ function initTranslate() {
   const input = document.getElementById("translate-input");
   const btn = document.getElementById("translate-btn");
   const result = document.getElementById("translate-result");
+  const romaji = document.getElementById("translate-romaji");
   const source = document.getElementById("translate-source");
   const speakBtn = document.getElementById("speak-btn");
 
@@ -106,6 +107,16 @@ function initTranslate() {
     result.textContent = text;
     result.classList.toggle("dim", dim);
     source.textContent = sourceLabel || "";
+
+    if (romaji) {
+      if (!dim && window.wanakana) {
+        const r = wanakana.toRomaji(text);
+        romaji.textContent = r !== text ? r : "";
+      } else {
+        romaji.textContent = "";
+      }
+    }
+
     // Show speak button only when there's a real Japanese result.
     if (speakBtn) {
       speakBtn.hidden = dim;

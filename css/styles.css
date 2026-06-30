@@ -267,6 +267,7 @@ body {
 .speak-btn.speaking { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .result-text { font-size: 1.9rem; font-weight: 600; line-height: 1.4; word-break: break-word; }
 .result-text.dim { color: var(--text-dim); font-size: 1.1rem; font-weight: 400; }
+.result-romaji { font-size: 0.95rem; color: var(--accent); letter-spacing: 0.04em; margin-top: 2px; word-break: break-word; }
 .result-source { font-size: 0.8rem; color: var(--text-dim); }
 
 /* ===== Responsive ===== */
