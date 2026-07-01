@@ -19,6 +19,7 @@
       <button class="nav-btn" data-view="katakana">ア<span>Katakana</span></button>
       <button class="nav-btn" data-view="kanji">漢<span>Kanji</span></button>
       <button class="nav-btn" data-view="translate">訳<span>Translate</span></button>
+      <button class="nav-btn" data-view="scan">📷<span>Scan</span></button>
     </nav>
   </aside>
 
@@ -97,10 +98,55 @@
         </div>
       </div>
     </section>
+    <!-- Scan -->
+    <section id="scan" class="view">
+      <header class="view-header">
+        <div class="view-title">
+          <h1>Scan <span class="subtitle">スキャン</span></h1>
+          <p class="view-desc">Point your camera at Japanese text to get an English translation.</p>
+        </div>
+      </header>
+
+      <div class="scan-panel">
+        <div class="camera-wrap">
+          <video id="scan-video" class="camera-feed" autoplay playsinline muted></video>
+          <canvas id="scan-canvas" hidden></canvas>
+          <div id="camera-placeholder" class="camera-placeholder">
+            <span class="camera-icon">📷</span>
+            <p>Camera off</p>
+          </div>
+        </div>
+
+        <div class="scan-controls">
+          <button id="camera-btn" class="btn-primary">Start Camera</button>
+          <button id="capture-btn" class="btn-secondary" disabled>Capture &amp; Translate</button>
+        </div>
+
+        <div id="scan-status" class="scan-status" hidden></div>
+
+        <div id="scan-results" class="scan-results" hidden>
+          <div class="result-card">
+            <span class="result-label">Japanese text found</span>
+            <div id="scan-japanese" class="result-text" style="font-size:1.2rem"></div>
+          </div>
+          <div class="result-card">
+            <div class="result-card-header">
+              <span class="result-label">English translation</span>
+              <button id="scan-speak-btn" class="speak-btn" title="Read aloud" aria-label="Read translation aloud" hidden>🔊</button>
+            </div>
+            <div id="scan-english" class="result-text"></div>
+            <div id="scan-romaji" class="result-romaji"></div>
+            <span id="scan-source" class="result-source"></span>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script src="js/wanakana.min.js"></script>
+  <script src="js/tesseract/tesseract.min.js"></script>
   <script src="js/data.js" defer></script>
   <script src="js/app.js" defer></script>
+  <script src="js/scan.js" defer></script>
 </body>
 </html>
